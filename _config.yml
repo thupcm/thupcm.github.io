@@ -1,15 +1,15 @@
 # Site settings
 title: THUMT
-email: thumt17@gmail.com
+email: thupretrainchnmed@163.com
 description: >
   Jekyll Template for Project Websites
   providing documentation and blog post pages.
 lang: en-US
 
 baseurl: "/" # the subpath of your site, e.g. /blog/
-url: https://thumt.github.io # the base hostname & protocol for your site
-git_address: https://github.com/thumt/thumt.github.io
-git_edit_address: https://github.com/thumt/thumt.github.io/blob/master
+url: https://thupcm.github.io # the base hostname & protocol for your site
+git_address: https://github.com/thupcm/thupcm.github.io
+git_edit_address: https://github.com/thupcm/thupcm.github.io/blob/master
 
 # theme options from https://bootswatch.com/3/
 # comment out this to use default Bootstrap
