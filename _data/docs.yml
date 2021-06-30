@@ -1,11 +1,11 @@
-- title: Getting Started
+- title: 开始
   docs:
-  - home
-  - themes
-  - customization
+  - 清A健第一步
+  - 清A健第二步
+  - 清A健第三步
 
-- title: Examples
+- title: 示例
   docs:
-  - cheatsheet
-  - font-awesome
-  - bootstrap
+  - 清A健实战示例1
+  - 清A健实战示例2
+  - 清A健实战示例3
