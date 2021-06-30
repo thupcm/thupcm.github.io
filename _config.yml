@@ -4,7 +4,7 @@ email: thupretrainchnmed@163.com
 description: >
   Jekyll Template for Project Websites
   providing documentation and blog post pages.
-lang: en-US
+lang: zh-CN
 
 baseurl: "/" # the subpath of your site, e.g. /blog/
 url: https://thupcm.github.io # the base hostname & protocol for your site
@@ -34,7 +34,7 @@ exclude:
   - .idea/
   - .gitignore
   - README.md
-timezone: Europe/Berlin
+timezone: Asia/Hong_Kong
 defaults:
 - scope:
     path: _posts
