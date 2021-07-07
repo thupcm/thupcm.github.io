@@ -24,13 +24,56 @@ layout: default
     <div class="row">
         <h2 class="text-center">体验应用</h2>
         <div class="col-md-6">
-            <form>
+            <form action="myurl" method="POST" name="myForm">
                 输入您的作文标题: <br>
-                <input type="text" style="width:200px; height:200px;">
+                <input type="text">
                 <br><br>
-                <input type="submit" value="Submit">
+                <input type="submit">
             </form> 
+            <div id="decoded"></div>
+            <button id="encode">Encode</button>
+            <div id="encoded"></div>            
         </div>
+        <script>
+            encode.onclick = async (e) => {
+                let response = await fetch('http://localhost:8482/encode', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                })
+        
+                let text = await response.text(); // read response body as text
+                data = JSON.parse(text);
+                document.querySelector("#encoded").innerHTML = text;
+              //  document.querySelector("#encoded").innerHTML = `First name = ${data.firstname} <br/> 
+              //                                                  Last name = ${data.lastname} <br/>
+              //                                                  Age    = ${data.age}`
+            };
+        
+            formElem.onsubmit = async (e) => {
+              e.preventDefault();
+              var form = document.querySelector("#formElem");
+             // var form = document.forms[0];
+        
+                data = {
+                  firstname : form.querySelector('input[name="firstname"]').value,
+                  lastname : form.querySelector('input[name="lastname"]').value,
+                  age : 5
+                }
+        
+                let response = await fetch('http://localhost:8482/decode', {
+                        method: 'POST', // or 'PUT'
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data),
+                })
+        
+                let text = await response.text(); // read response body as text
+                document.querySelector("#decoded").innerHTML = text;
+            };
+        </script>        
         <div class="col-md-6 display-area">
             生成结果：<br>
             <p>清A健不错</p>
@@ -55,3 +98,17 @@ layout: default
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function submitform(){
+        alert("Sending Json");
+        var xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        var j = {
+            "first_name":"binchen",
+            "last_name":"heris",
+        };
+        xhr.send(JSON.stringify(j));
+    }
+</script>
