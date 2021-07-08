@@ -23,17 +23,20 @@ layout: default
     <hr>
     <div class="row">
         <h2 class="text-center">体验应用</h2>
+        <br><br>
         <div class="col-md-6">
             <form id="formElem">
-                输入您的作文标题: <br>
-                <input type="text" name="to-title">
+                <h4 class="text-center">输入您的作文主题</h4> <br>
+                <textarea class="form-control" cols="10" rows="6" id="inputtextarea" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。</textarea>
+                <!--<div contenteditable="true"><input type="text" name="to-title"></div>-->
                 <br><br>
-                <input type="submit">
-            </form> 
-            <div id="decoded"></div>
-            <button id="encode">Encode</button>
-            <div id="encoded"></div>            
+                <center><input type="submit" value="生成" style="width:80%;font-size:18px;"></center>
+            </form>        
         </div>
+        <div class="col-md-6 display-area">
+            <h4 class="text-center">生成结果</h4><br>
+            <textarea class="form-control" cols="10" rows="6" id="decoded" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。也就是说，一个人的健康状况可以概括为：心理健康、精力充沛、智力正常、行为正常等四个方面。因此，当人在某方面出现了问题时，我们一定要重视和关注它，并把它看作是一种必然性的东西，不能掉以轻心，否则就会给自己带来不必要的麻烦，影响健康长寿。</textarea>
+        </div>        
         <script>        
             formElem.onsubmit = async (e) => {
               e.preventDefault();
@@ -41,42 +44,42 @@ layout: default
              // var form = document.forms[0];
         
                 data = {
-                  prompt : form.querySelector('input[name="to-title"]').value,
+                  prompt : form.querySelector('textarea[name="input_text"]').value,
                 }
+                //document.querySelector("#decoded").innerHTML = form.querySelector('input[name="to-title"]').value;
         
-                let response = await fetch('//demo.shuzibeijing.cn:34003/generate', {
+                let response = await fetch('http://demo.shuzibeijing.cn:34003/generate', {
                         method: 'POST', // or 'PUT'
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify(data),
                 })
-        
+
+//                var text = await response.parseJSON().generated;
+
                 let text = await response.text(); // read response body as text
-                document.querySelector("#decoded").innerHTML = text;
+                var obj = JSON.parse(text);
+                document.querySelector("#decoded").innerHTML = obj.generated;
             };
         </script>        
-        <div class="col-md-6 display-area">
-            生成结果：<br>
-            <p>清A健不错</p>
-        </div>
     </div>        
     <hr>
     <div class="row">
         <div class="col-sm-4">
             <h1 class="text-center"><i class="fa fa-pencil" aria-hidden="true"></i></h1>
             <h3 class="text-center">标准数据集</h3>
-            <p>一般来讲，我们都必须务必慎重的考虑考虑。我们一般认为，抓住了问题的关键，其他一切则会迎刃而解。一般来说，这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 所谓清A健数据集，关键是它很大。真的很大。</p>
+            <div style="font-size:16px;">一般来讲，我们都必须务必慎重的考虑考虑。我们一般认为，抓住了问题的关键，其他一切则会迎刃而解。一般来说，这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 所谓清A健数据集，关键是它很大。真的很大。</div>
         </div>
         <div class="col-sm-4">
             <h1 class="text-center"><i class="fa fa-cogs" aria-hidden="true"></i></h1>
             <h3 class="text-center">开放API</h3>
-            <p>我们不得不面对一个非常尴尬的事实，那就是，那么，就我我们当今社会来说，开放API的意义，不能不说非常重大。一个好用API，意义更加重大。清A健API，非常好用。这是坠吼的。清A健为什么这么强大？API这么好用？试试看 </p>
+            <div style="font-size:16px;">我们不得不面对一个非常尴尬的事实，那就是，那么，就我们当今社会来说，开放API的意义，不能不说非常重大。一个好用API，意义更加重大。清A健API，非常好用。这是坠吼的。清A健为什么这么强大？API这么好用？试试看 </div>
         </div>
         <div class="col-sm-4">
             <h1 class="text-center"><i class="fa fa-code-fork" aria-hidden="true"></i></h1>
             <h3 class="text-center">任务评测</h3>
-            <p>黑格尔说过一句富有哲理的话，只有永远躺在泥坑里的人，才不会再掉进坑里。这似乎解答了我的疑惑。但另一方面，吉格·金克拉曾经提到过，如果你能做梦，你就能实现它。这不禁令我深思。我悟了，我们需要清A健任务评测。来战！</p>
+            <div style="font-size:16px;">黑格尔说过一句富有哲理的话，只有永远躺在泥坑里的人，才不会再掉进坑里。这似乎解答了我的疑惑。但另一方面，吉格·金克拉曾经提到过，如果你能做梦，你就能实现它。这不禁令我深思。我悟了，我们需要清A健任务评测。来战！</div>
         </div>
     </div>
 </div>
