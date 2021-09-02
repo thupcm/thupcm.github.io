@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+
+    <link rel="shortcut icon" href="/favicon.ico?1">
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>清华大学微写作演示</title>
+<link rel="canonical" href="https://thupcm.github.io/microwrite.html" />
+<meta property="og:url" content="https://thupcm.github.io/microwrite.html" />
+<!-- End Jekyll SEO tag -->
+
+
+    <link rel="alternate" type="application/rss+xml" title="清A健" href="https://thupcm.github.io/feed.xml" />
+</head>
+
+
+<body>
+    <!--TTTTTTTTTT
+    <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container navbar-container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+            <a class="navbar-brand" href="/">
+                <span><img src="/assets/img/logonav.png" alt="Logo"></span> 清A健
+            </a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <div class="navbar-right">    
+                <ul class="nav navbar-nav">
+                <li ><a href="/docs/home/">开始</a></li>
+                <li ><a href="/blog/2017/05/03/jekyll-doc-theme/">动态</a></li>
+                <li ><a href="/blog/2017/05/03/jekyll-doc-theme/">数据</a></li>
+                <li ><a href="/blog/2017/05/03/jekyll-doc-theme/">榜单</a></li>
+                <li ><a href="/blog/2017/05/03/jekyll-doc-theme/">论文</a></li>
+                <li ><a href="/blog/2017/05/03/jekyll-doc-theme/">团队</a></li>   
+                </ul>                                                                         
+            </div>
+            TTTTTTTTTT-->
+            <!--</ul>-->
+
+<!--            <div class="navbar-right">
+                <form class="navbar-form navbar-left">
+                    <div class="form-group has-feedback">
+                        <input id="search-box" type="search" class="form-control" placeholder="Search...">
+                        <i class="fa fa-search form-control-feedback"></i>
+                    </div>
+                </form>
+                <ul class="nav navbar-nav">
+                    <li><a href="https://github.com/thupcm/thupcm.github.io"><i class="fa fa-github" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+-->        
+<!-- TTTTTTTTTT 
+    </div>    
+</nav>
+TTTTTTTTTT -->
+
+    <div class="page-content">
+        <div class="wrapper">
+            <div class="container">
+<div class="row">
+    <h2 class="text-center">清华大学微写作系统</h2>
+    <br><br>
+    <div class="col-md-6">
+        <form id="formElem">
+            <h4 class="text-center">输入您的作文主题</h4> <br>
+            <textarea class="form-control" cols="10" rows="6" id="inputtextarea" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。</textarea>
+            <br><br>
+            <center><input type="submit" value="生成" style="width:80%;font-size:18px;"></center>
+        </form>        
+    </div>
+    <div class="col-md-6 display-area">
+        <h4 class="text-center">生成结果</h4><br>
+        <textarea class="form-control" cols="10" rows="6" id="decoded" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。也就是说，一个人的健康状况可以概括为：心理健康、精力充沛、智力正常、行为正常等四个方面。因此，当人在某方面出现了问题时，我们一定要重视和关注它，并把它看作是一种必然性的东西，不能掉以轻心，否则就会给自己带来不必要的麻烦，影响健康长寿。</textarea>
+    </div>        
+    <script>        
+        formElem.onsubmit = async (e) => {
+          e.preventDefault();
+          var form = document.querySelector("#formElem");
+         // var form = document.forms[0];
+    
+            data = {
+              prompt : form.querySelector('textarea[name="input_text"]').value,
+            }    
+            let response = await fetch('http://demo.shuzibeijing.cn:34003/generate', {
+                    method: 'POST', // or 'PUT'
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+            })
+
+            let text = await response.text(); // read response body as text
+            var obj = JSON.parse(text);
+            document.querySelector("#decoded").innerHTML = obj.generated;
+        };
+    </script>        
+</div> 
+</div>
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="container">
+
+        <p class="text-center">
+            © 版权所有：清华大学
+        </p>
+        <!-- <p class="text-muted">Place sticky footer content here.</p> -->
+    </div>
+</footer>
+
+    <script>
+  var baseurl = ''
+</script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="/assets/js/bootstrap.min.js "></script>
+<script src="/assets/js/typeahead.bundle.min.js "></script>
+
+<script src="/assets/js/main.js "></script>
+
+</body>
+
+</html>
