@@ -1,45 +1,61 @@
-<div class="container">
-<div class="row">
-    <h2 class="text-center">清华大学微写作系统</h2>
-    <br><br>
-    <div class="col-md-6">
-        <form id="formElem">
-            <h4 class="text-center">输入您的作文主题</h4> <br>
-            <textarea class="form-control" cols="10" rows="6" id="inputtextarea" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。</textarea>
-            <!--<div contenteditable="true"><input type="text" name="to-title"></div>-->
-            <br><br>
-            <center><input type="submit" value="生成" style="width:80%;font-size:18px;"></center>
-        </form>        
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "zh-CN" }}">
+
+{% include head.html %}
+
+<body>
+    <div class="page-content">
+        <div class="wrapper">
+            <div class="container">
+                <div class="row">
+                    <h2 class="text-center">清华大学微写作系统</h2>
+                    <br><br>
+                    <div class="col-md-6">
+                        <form id="formElem">
+                            <h4 class="text-center">输入您的作文主题</h4> <br>
+                            <textarea class="form-control" cols="10" rows="6" id="inputtextarea" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。</textarea>
+                            <!--<div contenteditable="true"><input type="text" name="to-title"></div>-->
+                            <br><br>
+                            <center><input type="submit" value="生成" style="width:80%;font-size:18px;"></center>
+                        </form>        
+                    </div>
+                    <div class="col-md-6 display-area">
+                        <h4 class="text-center">生成结果</h4><br>
+                        <textarea class="form-control" cols="10" rows="6" id="decoded" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。也就是说，一个人的健康状况可以概括为：心理健康、精力充沛、智力正常、行为正常等四个方面。因此，当人在某方面出现了问题时，我们一定要重视和关注它，并把它看作是一种必然性的东西，不能掉以轻心，否则就会给自己带来不必要的麻烦，影响健康长寿。</textarea>
+                    </div>        
+                    <script>        
+                        formElem.onsubmit = async (e) => {
+                          e.preventDefault();
+                          var form = document.querySelector("#formElem");
+                         // var form = document.forms[0];
+                    
+                            data = {
+                              prompt : form.querySelector('textarea[name="input_text"]').value,
+                            }
+                            //document.querySelector("#decoded").innerHTML = form.querySelector('input[name="to-title"]').value;
+                    
+                            let response = await fetch('http://demo.shuzibeijing.cn:34003/generate', {
+                                    method: 'POST', // or 'PUT'
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(data),
+                            })
+                
+                //                var text = await response.parseJSON().generated;
+                
+                            let text = await response.text(); // read response body as text
+                            var obj = JSON.parse(text);
+                            document.querySelector("#decoded").innerHTML = obj.generated;
+                        };
+                    </script>        
+                </div> 
+                </div>
+        </div>
     </div>
-    <div class="col-md-6 display-area">
-        <h4 class="text-center">生成结果</h4><br>
-        <textarea class="form-control" cols="10" rows="6" id="decoded" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。也就是说，一个人的健康状况可以概括为：心理健康、精力充沛、智力正常、行为正常等四个方面。因此，当人在某方面出现了问题时，我们一定要重视和关注它，并把它看作是一种必然性的东西，不能掉以轻心，否则就会给自己带来不必要的麻烦，影响健康长寿。</textarea>
-    </div>        
-    <script>        
-        formElem.onsubmit = async (e) => {
-          e.preventDefault();
-          var form = document.querySelector("#formElem");
-         // var form = document.forms[0];
-    
-            data = {
-              prompt : form.querySelector('textarea[name="input_text"]').value,
-            }
-            //document.querySelector("#decoded").innerHTML = form.querySelector('input[name="to-title"]').value;
-    
-            let response = await fetch('http://demo.shuzibeijing.cn:34003/generate', {
-                    method: 'POST', // or 'PUT'
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-            })
 
-//                var text = await response.parseJSON().generated;
+    {% include js_files.html %}
+</body>
 
-            let text = await response.text(); // read response body as text
-            var obj = JSON.parse(text);
-            document.querySelector("#decoded").innerHTML = obj.generated;
-        };
-    </script>        
-</div> 
-</div>
+</html>
+
