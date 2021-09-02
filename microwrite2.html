@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+   <head>
+   	<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+        <link href="favicon.png" rel="shortcut icon"/>
+        <title>面向新闻领域的中英翻译系统</title>
+        <link rel="stylesheet" href="static/layout.css" type="text/css">
+        <script type="text/javascript" src="static/jquery-1.3.2.min.js"></script>
+    <style type="text/css">
+    * {
+margin: 0;
+}
+html, body {
+height: 100%;
+}
+.wrapper {
+min-height: 100%;
+height: auto !important;
+height: 100%;
+margin: 0 auto -4em;
+}
+.footer, .push {
+height: 4em;
+}
+    </style>
+	<script>
+  	function submit(text){
+ 	  	$.post('/translateapi/'+encodeURI(text),
+ 	  	function(data){
+ 	  		//result = JSON.parse(data)
+ 	  		document.getElementById('result').innerHTML = data
+ 	  		/*
+ 	  		for (i in result){
+ 	  			document.getElementById('result').innerHTML += result[i]
+ 	  			if (i != result.length-1)
+ 	  				document.getElementById('result').innerHTML += '/'
+ 	  		}*/
+ 	  	}
+ 	 	)
+ 	  }
+  	 </script>
+   </head>
+   
+<body>
+<div class="wrapper">
+	 <p style="text-align:center">
+		<img style="margin:0 auto;width:125px;height:125px" src="/static/thumt-logo.jpg" />
+		<!--img style="margin:0 auto;width:150px;height:125px" src="/static/blr-logo.png" /-->
+	 </p>
+	 <h1 style="text-align:center">微写作系统演示</h1>
+	 <div class="col-md-6">
+        <form id="formElem">
+            <h4 class="text-center">输入您的作文主题</h4> <br>
+            <textarea class="form-control" cols="10" rows="6" id="inputtextarea" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。</textarea>
+            <br><br>
+            <center><input type="submit" value="生成" style="width:80%;font-size:18px;"></center>
+        </form>        
+    </div>
+    <div class="col-md-6 display-area">
+        <h4 class="text-center">生成结果</h4><br>
+        <textarea class="form-control" cols="10" rows="6" id="decoded" name="input_text" style="font-size:22px;padding:10px;">健康是指一个人在身体、精神和社会等方面都处于良好的状态。也就是说，一个人的健康状况可以概括为：心理健康、精力充沛、智力正常、行为正常等四个方面。因此，当人在某方面出现了问题时，我们一定要重视和关注它，并把它看作是一种必然性的东西，不能掉以轻心，否则就会给自己带来不必要的麻烦，影响健康长寿。</textarea>
+    </div>        
+    <script>        
+        formElem.onsubmit = async (e) => {
+          e.preventDefault();
+          var form = document.querySelector("#formElem");
+         // var form = document.forms[0];
+    
+            data = {
+              prompt : form.querySelector('textarea[name="input_text"]').value,
+            }    
+            let response = await fetch('http://demo.shuzibeijing.cn:34003/generate', {
+                    method: 'POST', // or 'PUT'
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+            })
+
+            let text = await response.text(); // read response body as text
+            var obj = JSON.parse(text);
+            document.querySelector("#decoded").innerHTML = obj.generated;
+        };
+    </script>  
+
+<!--	<div id="input_area">
+		<div style='float:left'>
+		  
+		 </div>
+		 <br>
+			<table border="0" width="100%" cellpadding="10">
+				<tr>
+					<td valign="top">
+						<textarea cols="50" rows="6" id="inputtextarea" name="input_text" style="font-size:22px" >布什与沙龙举行了会谈</textarea >
+					</td>
+				</tr>
+				<tr><td style="padding-top:10px">
+				<button style="font-size:15px" d="segment_button" onclick="submit(document.getElementById('inputtextarea').value)">翻译</button></td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<p id="result" cols="50" rows="6" style="padding-top:10px;word-break:break-all;white-space:pre-wrap;font-size:22px" readonly></p >
+					</td>
+				</tr>
+			</table>
+			<br/>
+		</div>-->
+</div>
+<div align="center">
+  <p>&copy; 版权所有：清华大学</p>
+</div>
+</body>
+</html>
